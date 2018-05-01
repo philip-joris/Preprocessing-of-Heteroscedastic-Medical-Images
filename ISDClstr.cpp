@@ -67,13 +67,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int nrOfVoxels          = imgDims[2]*imgDims[1]*imgDims[0];
     int* image              = reinterpret_cast<int*>(mxGetData(prhs[0]));
     double* D               = reinterpret_cast<double*>(mxGetData(prhs[1]));
-    
-    std::cout << "\nImage dims: " << imgDims[0] << "x" << imgDims[1] << "x" << imgDims[2];
-    std::cout << "\nD dims: " << DDims[0] << "x" << DDims[1];
-    std::cout << "\nNr. of clusters: " << nrOfClusters;
-    std::cout << "\nNr. of bins: " << nrOfBins;
-    std::cout << "\nNr. of voxels: " << nrOfVoxels;
-    
+
     // Build histogram
     int* counts = new int[nrOfBins](); // init to zero
     for(int i = 0; i < nrOfVoxels; ++i)
@@ -115,13 +109,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         if(oldCost == cost)
             break;
     }
-    
-    // Output
-    /*plhs[0] = mxCreateDoubleMatrix(nrOfVoxels,1,mxREAL);
-    double *ptr = (double *)(mxGetData(plhs[0]));
-        for(int i = 0; i < nrOfVoxels; ++ i)
-            ptr[i] = labels[image[i]];*/
-    
+
     plhs[0] = mxCreateNumericArray(imgNDims, imgDims, mxINT32_CLASS, mxREAL);
     int *ptr = (int *)(mxGetData(plhs[0]));
         for(int i = 0; i < nrOfVoxels; ++ i)
